@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-family: Chalkboard,comic sans ms,'sans-serif';
+}
+
+.dropdown .dropdown-content {
+    z-index: 10;
+}

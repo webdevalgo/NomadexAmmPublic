@@ -1,0 +1,72 @@
+import algosdk from 'algosdk';
+import { AppSpecAppDetails, AppSpecAppDetailsByCreatorAndName, AppSpecAppDetailsById, ApplicationClient } from './types/app-client';
+import Algodv2 = algosdk.Algodv2;
+/**
+ * Create a new ApplicationClient instance
+ * @param appDetails The details of the app
+ * @param algod An algod instance
+ *
+ * @example Resolve by creator and name
+ * const client = algokit.getAppClient(
+ *     {
+ *       resolveBy: 'creatorAndName',
+ *       app: {appSpec},
+ *       sender: {account},
+ *       creatorAddress: {creator},
+ *       findExistingUsing: indexerClient,
+ *     },
+ *     algodClient,
+ *   )
+ *
+ * @example Resolve by id:
+ * const client = algokit.getAppClient(
+ *     {
+ *       resolveBy: 'id',
+ *       app: {appSpec},
+ *       sender: {account},
+ *       id: {id},
+ *     },
+ *    algodClient,
+ * )
+ *
+ * @returns The application client
+ */
+export declare function getAppClient(appDetails: AppSpecAppDetails, algod: Algodv2): ApplicationClient;
+/**
+ * Create a new ApplicationClient instance by id
+ * @param appDetails The details of the app
+ * @param algod An algod instance
+ *
+ * @example
+ * const client = algokit.getAppClientById(
+ *     {
+ *       app: {appSpec},
+ *       sender: {account},
+ *       id: {id},
+ *     },
+ *     algodClient,
+ *   )
+ *
+ * @returns The application client
+ */
+export declare function getAppClientById(appDetails: AppSpecAppDetailsById, algod: Algodv2): ApplicationClient;
+/**
+ * Create a new ApplicationClient instance by creator and name
+ * @param appDetails The details of the app by creator and name
+ * @param algod An algod instance
+ *
+ * @example
+ * const client = algokit.getAppClientByCreatorAndName(
+ *     {
+ *       app: {appSpec},
+ *       sender: {account},
+ *       creatorAddress: {account.addr},
+ *       findExistingUsing: {indexerClient},
+ *     },
+ *     algodClient,
+ *   )
+ *
+ * @returns The application client
+ */
+export declare function getAppClientByCreatorAndName(appDetails: AppSpecAppDetailsByCreatorAndName, algod: Algodv2): ApplicationClient;
+//# sourceMappingURL=app-client.d.ts.map
