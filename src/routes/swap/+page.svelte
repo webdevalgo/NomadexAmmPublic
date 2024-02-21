@@ -4,6 +4,6 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		goto(`/swap/${knownTokens[0].ticker}-${knownTokens[1].ticker}`, { replaceState: true });
+		goto(`/swap/${$knownTokens[0].ticker}-${$knownTokens[1].ticker}`, { replaceState: true });
 	});
 </script>

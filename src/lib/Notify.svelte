@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { writable, get } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	type Notification = {
 		id: number;
 		message: string;
@@ -99,38 +99,38 @@
 	import SuccessIcon from 'svelte-star/dist/md/MdCheckCircle.svelte';
 </script>
 
-<div
-	class="fixed top-10 right-10 min-w-[250px] min-h-[40px] text-primary-content rounded-btn flex flex-col gap-2 items-end"
->
-	{#each $notifications as notification}
-		<div
-			class="notification items-start justify-between relative bg-primary rounded-btn p-2 text-wrap max-w-[250px] {notification.type}"
-		>
-			<button
-				on:click={() => notification.remove()}
-				class="close bg-[red] btn-sm w-10 h-10 scale-[0.5] p-0 absolute top-[-5px] right-[-8px]"
+{#if $notifications.length}
+	<div class="fixed top-10 right-10 min-w-[250px] min-h-[40px] text-white rounded-btn flex flex-col gap-2 items-end">
+		{#each $notifications as notification}
+			<div
+				class="notification items-start justify-between relative bg-primary rounded-btn p-2 text-wrap max-w-[250px] {notification.type}"
 			>
-				<CloseIcon />
-			</button>
-			<span class="icon">
-				{#if notification.type === 'info'}
-					<InfoIcon />
-				{:else if notification.type === 'warn'}
-					<WarnIcon />
-				{:else if notification.type === 'error'}
-					<ErrorIcon />
-				{:else if notification.type === 'pending'}
-					<span class="loading w-5 ml-[0.17rem] mt-[0.17rem]" />
-				{:else if notification.type === 'success'}
-					<SuccessIcon />
-				{/if}
-			</span>
-			<span class="message">
-				{notification.message.slice(0, 100)}{notification.message.length > 100 ? '...' : ''}
-			</span>
-		</div>
-	{/each}
-</div>
+				<button
+					on:click={() => notification.remove()}
+					class="close bg-red-900 btn-sm w-10 h-10 scale-[0.5] p-0 absolute top-[-5px] right-[-8px]"
+				>
+					<CloseIcon />
+				</button>
+				<span class="icon">
+					{#if notification.type === 'info'}
+						<InfoIcon />
+					{:else if notification.type === 'warn'}
+						<WarnIcon />
+					{:else if notification.type === 'error'}
+						<ErrorIcon />
+					{:else if notification.type === 'pending'}
+						<span class="loading w-5 ml-[0.17rem] mt-[0.17rem]" />
+					{:else if notification.type === 'success'}
+						<SuccessIcon />
+					{/if}
+				</span>
+				<span class="message">
+					{notification.message.slice(0, 100)}{notification.message.length > 100 ? '...' : ''}
+				</span>
+			</div>
+		{/each}
+	</div>
+{/if}
 
 <style>
 	@keyframes fade {
@@ -165,7 +165,7 @@
 	}
 	.notification.warn {
 		--notification-bg: orange;
-        color: black;
+		color: black;
 	}
 	.notification.pending {
 		--notification-bg: rgb(0, 110, 255);

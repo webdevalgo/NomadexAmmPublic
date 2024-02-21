@@ -1,55 +1,15 @@
-import type { Token } from "$lib";
-import algosdk from "algosdk";
-import { currentAppId } from "./_deployed";
-import { getClient, getUnnamedResourcesAccessed, getUnnamedResourcesAccessedFromMethod } from "./_shared";
-import { getTransactionSignerAccount } from "./UseWallet.svelte";
+const SCALE = 100_000_000_000_000n;
 
-export async function simulateHowMuch(tokenA: Token, tokenB: Token, amount: bigint, simulateByOutAmount = false) {
-    const client = getClient(currentAppId, getTransactionSignerAccount());
+export function calculateOutTokens(inAmount: bigint, inSupply: bigint, outSupply: bigint, fee: bigint) {
+	const factor = SCALE - fee;
+	return (inAmount * outSupply * factor) / ((inAmount + inSupply) * SCALE);
+}
 
-    let atc: algosdk.AtomicTransactionComposer | undefined = undefined;
-    const compose = client.compose();
-
-    if (tokenA.ticker === 'VOI' && tokenB.ticker === 'VIA') {
-        if (simulateByOutAmount) {
-            atc = await compose.computeSwapToArc200ByOutTokens(
-                { arc200_amount: amount },
-                await getUnnamedResourcesAccessedFromMethod(client, 'computeSwapToArc200ByOutTokens', { arc200_amount: amount })
-            ).atc();
-        } else {
-            atc = await compose.computeSwapToArc200(
-                { amount: amount },
-                await getUnnamedResourcesAccessedFromMethod(client, 'computeSwapToArc200', { amount: amount })
-            ).atc();
-        }
-    } else if (tokenA.ticker === 'VIA' && tokenB.ticker === 'VOI') {
-        if (simulateByOutAmount) {
-            atc = await compose.computeSwapFromArc200ByOutAmount(
-                { amount: amount },
-                await getUnnamedResourcesAccessedFromMethod(client, 'computeSwapFromArc200ByOutAmount', { amount: amount })
-            ).atc();
-        } else {
-            atc = await compose.computeSwapFromArc200(
-                { arc200_amount: amount },
-                await getUnnamedResourcesAccessedFromMethod(client, 'computeSwapFromArc200', { arc200_amount: amount })
-            ).atc();
-        }
-    }
-
-    if (atc) {
-        const txns = atc.buildGroup().map(({ txn }) => txn);
-
-        const logs: any = (await getUnnamedResourcesAccessed(txns))
-            .simulated
-            .txnGroups
-            .map(group => group.txnResults.map(txn => txn.txnResult.logs))
-            ?.[0]
-            ?.[0]
-            ?.[0];
-
-        if (logs) {
-            return algosdk.ABIUintType.from('uint64').decode(logs.slice(-8));
-        }
-    }
-    return 0
+export function calculateInTokens(outAmount: bigint, inSupply: bigint, outSupply: bigint, fee: bigint) {
+	const factor = SCALE - fee;
+	const inAmount = (SCALE * inSupply * outAmount) / (outSupply * factor - outAmount * SCALE);
+	if (inAmount > 0n) {
+		return inAmount;
+	}
+	return BigInt(Number.MAX_SAFE_INTEGER) * BigInt(Number.MAX_SAFE_INTEGER);
 }

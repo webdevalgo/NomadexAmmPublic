@@ -1,0 +1,424 @@
+{
+  "name": "LimitOrders001",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "args": [
+        {
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "name": "fee",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "updateApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "setFee",
+      "args": [
+        {
+          "name": "ownerFee",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "setOwner",
+      "args": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "collectFee",
+      "args": [
+        {
+          "name": "algoAmount",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "createAlgoSellOrder",
+      "args": [
+        {
+          "name": "algoPayTxn",
+          "type": "pay"
+        },
+        {
+          "name": "arc200Id",
+          "type": "application"
+        },
+        {
+          "name": "arc200Amount",
+          "type": "uint256"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "PlaceOrder",
+          "args": [
+            {
+              "name": "orderId",
+              "type": "uint64"
+            },
+            {
+              "name": "maker",
+              "type": "address"
+            },
+            {
+              "name": "algoAmount",
+              "type": "uint64"
+            },
+            {
+              "name": "arc200Amount",
+              "type": "uint256"
+            },
+            {
+              "name": "orderDirection",
+              "type": "uint8"
+            }
+          ],
+          "desc": "**********************************************"
+        }
+      ]
+    },
+    {
+      "name": "createAlgoBuyOrder",
+      "args": [
+        {
+          "name": "arc200AppId",
+          "type": "application"
+        },
+        {
+          "name": "arc200Amount",
+          "type": "uint256"
+        },
+        {
+          "name": "algoAmount",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "PlaceOrder",
+          "args": [
+            {
+              "name": "orderId",
+              "type": "uint64"
+            },
+            {
+              "name": "maker",
+              "type": "address"
+            },
+            {
+              "name": "algoAmount",
+              "type": "uint64"
+            },
+            {
+              "name": "arc200Amount",
+              "type": "uint256"
+            },
+            {
+              "name": "orderDirection",
+              "type": "uint8"
+            }
+          ],
+          "desc": "**********************************************"
+        }
+      ]
+    },
+    {
+      "name": "fillAlgoToArc200Order",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        },
+        {
+          "name": "arc200Amount",
+          "type": "uint256"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "FillOrder",
+          "args": [
+            {
+              "name": "orderId",
+              "type": "uint64"
+            },
+            {
+              "name": "maker",
+              "type": "address"
+            },
+            {
+              "name": "taker",
+              "type": "address"
+            },
+            {
+              "name": "filledAlgoAmount",
+              "type": "uint64"
+            },
+            {
+              "name": "filledArc200Amount",
+              "type": "uint256"
+            },
+            {
+              "name": "orderDirection",
+              "type": "uint8"
+            },
+            {
+              "name": "fee",
+              "type": "uint256"
+            }
+          ],
+          "desc": ""
+        }
+      ]
+    },
+    {
+      "name": "fillArc200ToAlgoOrder",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        },
+        {
+          "name": "algoPayTxn",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "FillOrder",
+          "args": [
+            {
+              "name": "orderId",
+              "type": "uint64"
+            },
+            {
+              "name": "maker",
+              "type": "address"
+            },
+            {
+              "name": "taker",
+              "type": "address"
+            },
+            {
+              "name": "filledAlgoAmount",
+              "type": "uint64"
+            },
+            {
+              "name": "filledArc200Amount",
+              "type": "uint256"
+            },
+            {
+              "name": "orderDirection",
+              "type": "uint8"
+            },
+            {
+              "name": "fee",
+              "type": "uint256"
+            }
+          ],
+          "desc": ""
+        }
+      ]
+    },
+    {
+      "name": "cancelOrder",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "CancelOrder",
+          "args": [
+            {
+              "name": "orderId",
+              "type": "uint64"
+            },
+            {
+              "name": "maker",
+              "type": "address"
+            },
+            {
+              "name": "returnedAmount",
+              "type": "uint256"
+            },
+            {
+              "name": "orderDirection",
+              "type": "uint8"
+            }
+          ],
+          "desc": ""
+        }
+      ]
+    },
+    {
+      "name": "registerOnline",
+      "args": [
+        {
+          "name": "selection_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "state_proof_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "vote_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "vote_first",
+          "type": "uint64"
+        },
+        {
+          "name": "vote_last",
+          "type": "uint64"
+        },
+        {
+          "name": "vote_key_dilution",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "registerOffline",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "PlaceOrder",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        },
+        {
+          "name": "maker",
+          "type": "address"
+        },
+        {
+          "name": "algoAmount",
+          "type": "uint64"
+        },
+        {
+          "name": "arc200Amount",
+          "type": "uint256"
+        },
+        {
+          "name": "orderDirection",
+          "type": "uint8"
+        }
+      ],
+      "desc": "**********************************************"
+    },
+    {
+      "name": "FillOrder",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        },
+        {
+          "name": "maker",
+          "type": "address"
+        },
+        {
+          "name": "taker",
+          "type": "address"
+        },
+        {
+          "name": "filledAlgoAmount",
+          "type": "uint64"
+        },
+        {
+          "name": "filledArc200Amount",
+          "type": "uint256"
+        },
+        {
+          "name": "orderDirection",
+          "type": "uint8"
+        },
+        {
+          "name": "fee",
+          "type": "uint256"
+        }
+      ],
+      "desc": ""
+    },
+    {
+      "name": "CancelOrder",
+      "args": [
+        {
+          "name": "orderId",
+          "type": "uint64"
+        },
+        {
+          "name": "maker",
+          "type": "address"
+        },
+        {
+          "name": "returnedAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "orderDirection",
+          "type": "uint8"
+        }
+      ],
+      "desc": ""
+    }
+  ]
+}

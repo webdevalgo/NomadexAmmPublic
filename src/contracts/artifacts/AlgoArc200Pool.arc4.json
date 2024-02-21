@@ -1,0 +1,415 @@
+{
+  "name": "AlgoArc200Pool",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "desc": "initialize values",
+      "args": [
+        {
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "name": "governer",
+          "type": "address"
+        },
+        {
+          "name": "arc200_token",
+          "type": "application"
+        },
+        {
+          "name": "lp_fee",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "updateApplication",
+      "desc": "allows admin to update the application",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "create_pool_token",
+      "args": [
+        {
+          "name": "algo_seed_txn",
+          "type": "pay"
+        },
+        {
+          "name": "lpt_name",
+          "type": "string"
+        },
+        {
+          "name": "lpt_unit",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "set_admin",
+      "args": [
+        {
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_governer",
+      "args": [
+        {
+          "name": "governer",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_fees",
+      "args": [
+        {
+          "name": "fee",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_mint_enabled",
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_burn_enabled",
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_swap_enabled",
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "register_online",
+      "args": [
+        {
+          "name": "selection_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "state_proof_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "vote_pk",
+          "type": "byte[]"
+        },
+        {
+          "name": "vote_first",
+          "type": "uint64"
+        },
+        {
+          "name": "vote_last",
+          "type": "uint64"
+        },
+        {
+          "name": "vote_key_dilution",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "register_offline",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_ratio",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "mint",
+      "desc": "*******************************************",
+      "args": [
+        {
+          "name": "pay_txn",
+          "type": "pay"
+        },
+        {
+          "name": "arc200_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "lpt_asset",
+          "type": "asset"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "Mint",
+          "args": [
+            {
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "name": "algo_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "arc200_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "lpt_amount",
+              "type": "uint64"
+            }
+          ],
+          "desc": "Event Mint(sender, algo_amount, arc200_amount, lpt_amount_minted)"
+        }
+      ]
+    },
+    {
+      "name": "burn",
+      "desc": "Withdraw liquidity",
+      "args": [
+        {
+          "name": "lpt_xfer_txn",
+          "type": "axfer"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      },
+      "events": [
+        {
+          "name": "Burn",
+          "args": [
+            {
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "name": "algo_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "arc200_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "lpt_amount",
+              "type": "uint64"
+            }
+          ],
+          "desc": "Event Burn(sender, lpt_amount_burned, algo_amount, arc200_amount)"
+        }
+      ]
+    },
+    {
+      "name": "swap_to_arc200",
+      "desc": "Swap from Algos to Arc200",
+      "args": [
+        {
+          "name": "pay_txn",
+          "type": "pay",
+          "desc": "Txn with an amount of algos sending to this app account"
+        },
+        {
+          "name": "min_amount",
+          "type": "uint64",
+          "desc": "min arc200 for this swap to be successful"
+        }
+      ],
+      "returns": {
+        "type": "uint64",
+        "desc": "amount of algos returned"
+      },
+      "events": [
+        {
+          "name": "Swap",
+          "args": [
+            {
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "name": "from_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "to_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "is_direction_from_arc200_to_algo",
+              "type": "uint8"
+            }
+          ],
+          "desc": "Event Swap(sender, from_amount, to_amount, is_direction_from_arc200_to_algo)"
+        }
+      ]
+    },
+    {
+      "name": "swap_from_arc200",
+      "desc": "Swap tokens from Arc200 to Algos",
+      "args": [
+        {
+          "name": "arc200_amount",
+          "type": "uint64",
+          "desc": "amount of arc200 approved"
+        },
+        {
+          "name": "min_amount",
+          "type": "uint64",
+          "desc": "min algo for this swap to be successful"
+        }
+      ],
+      "returns": {
+        "type": "uint64",
+        "desc": "amount of algos returned"
+      },
+      "events": [
+        {
+          "name": "Swap",
+          "args": [
+            {
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "name": "from_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "to_amount",
+              "type": "uint64"
+            },
+            {
+              "name": "is_direction_from_arc200_to_algo",
+              "type": "uint8"
+            }
+          ],
+          "desc": "Event Swap(sender, from_amount, to_amount, is_direction_from_arc200_to_algo)"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Swap",
+      "args": [
+        {
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "name": "from_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "to_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "is_direction_from_arc200_to_algo",
+          "type": "uint8"
+        }
+      ],
+      "desc": "Event Swap(sender, from_amount, to_amount, is_direction_from_arc200_to_algo)"
+    },
+    {
+      "name": "Mint",
+      "args": [
+        {
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "name": "algo_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "arc200_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "lpt_amount",
+          "type": "uint64"
+        }
+      ],
+      "desc": "Event Mint(sender, algo_amount, arc200_amount, lpt_amount_minted)"
+    },
+    {
+      "name": "Burn",
+      "args": [
+        {
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "name": "algo_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "arc200_amount",
+          "type": "uint64"
+        },
+        {
+          "name": "lpt_amount",
+          "type": "uint64"
+        }
+      ],
+      "desc": "Event Burn(sender, lpt_amount_burned, algo_amount, arc200_amount)"
+    }
+  ]
+}
